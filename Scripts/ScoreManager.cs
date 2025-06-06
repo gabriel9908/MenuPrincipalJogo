@@ -100,7 +100,7 @@ public class ScoreManager : MonoBehaviour
     public void AdicionarPontosPowerUp()
     {
         AdicionarPontos(pontosPowerUp, false);
-        Debug.log($"Pontos por power-up: {pontosPowerUp}");
+        Debug.Log($"Pontos por power-up: {pontosPowerUp}");
     }
     
     /// <summary>
