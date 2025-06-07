@@ -1,196 +1,193 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "@fontsource/inter";
 
-interface ScriptInfo {
-  name: string;
-  description: string;
-  features: string[];
-  path: string;
-}
-
-const scripts: ScriptInfo[] = [
+const scripts = [
   {
     name: "🎮 Tutorial Completo",
     description: "Guia passo a passo de implementação dos scripts Unity",
-    features: [
-      "Configuração completa da Hierarchy",
-      "Instruções detalhadas para cada script",
-      "Configuração de referências no Inspector",
-      "Resolução de problemas comuns",
-      "Checklist de implementação"
-    ],
-    path: "Scripts/TUTORIAL_IMPLEMENTACAO.md"
+    path: "Scripts/TUTORIAL_IMPLEMENTACAO.md",
+    category: "tutorial"
   },
   {
     name: "GameState.cs",
-    description: "Gerencia os estados do jogo (Menu, Jogando, Pausado, GameOver, Carregando)",
-    features: [
-      "Padrão Singleton",
-      "Sistema de eventos para notificação de mudanças",
-      "Controle automático do timeScale",
-      "Métodos de conveniência para mudanças de estado"
-    ],
-    path: "Scripts/GameState.cs"
+    description: "Gerencia os estados do jogo",
+    path: "Scripts/GameState.cs",
+    category: "core"
   },
   {
     name: "GameManager.cs", 
-    description: "Controlador principal que coordena todos os sistemas do jogo",
-    features: [
-      "Gerencia vidas do jogador",
-      "Controla início/fim de partidas",
-      "Coordena interação entre sistemas",
-      "Sistema de pause/resume",
-      "Detecção de condições de vitória/derrota"
-    ],
-    path: "Scripts/GameManager.cs"
+    description: "Controlador principal do jogo",
+    path: "Scripts/GameManager.cs",
+    category: "core"
   },
   {
     name: "GameOverUI.cs",
-    description: "Interface específica da tela de Game Over baseada na imagem fornecida",
-    features: [
-      "Animações de entrada suaves com DOTween",
-      "Timer de 5 segundos como mostrado na imagem",
-      "Sistema de cartas e avatares dos jogadores",
-      "Botões funcionais (Restart, Next Piece, Cards)",
-      "Área de propaganda personalizável"
-    ],
-    path: "Scripts/GameOverUI.cs"
+    description: "Interface de Game Over",
+    path: "Scripts/GameOverUI.cs",
+    category: "ui"
   },
   {
     name: "PlayerController.cs",
-    description: "Controla o jogador e suas ações no jogo 2D",
-    features: [
-      "Movimento 2D com física",
-      "Sistema de combate com detecção de inimigos",
-      "Gerenciamento de vida e invencibilidade",
-      "Animações baseadas em estados",
-      "Sistema de input responsivo"
-    ],
-    path: "Scripts/PlayerController.cs"
+    description: "Controle do jogador",
+    path: "Scripts/PlayerController.cs",
+    category: "player"
   },
   {
     name: "ScoreManager.cs",
-    description: "Sistema completo de pontuação e recordes",
-    features: [
-      "Multiplicadores dinâmicos",
-      "Sistema de combo",
-      "Salvamento de recordes",
-      "Diferentes tipos de pontuação",
-      "Sistema de ranking"
-    ],
-    path: "Scripts/ScoreManager.cs"
+    description: "Sistema de pontuação",
+    path: "Scripts/ScoreManager.cs",
+    category: "systems"
   },
   {
     name: "CardSystem.cs",
-    description: "Sistema de cartas como mostrado na interface Game Over",
-    features: [
-      "Inventário de cartas com capacidade limitada",
-      "Diferentes tipos e raridades de cartas",
-      "Sistema de efeitos (cura, ataque, buffs)",
-      "Interface visual das cartas",
-      "Seleção aleatória ponderada por raridade"
-    ],
-    path: "Scripts/CardSystem.cs"
+    description: "Sistema de cartas",
+    path: "Scripts/CardSystem.cs",
+    category: "systems"
   },
   {
     name: "AudioManager.cs",
-    description: "Gerenciamento completo de áudio do jogo",
-    features: [
-      "Música de fundo com fade",
-      "Efeitos sonoros categorizados",
-      "Controles de volume individuais",
-      "Sistema de mute/unmute",
-      "Salvamento de configurações"
-    ],
-    path: "Scripts/AudioManager.cs"
+    description: "Gerenciamento de áudio",
+    path: "Scripts/AudioManager.cs",
+    category: "systems"
   },
   {
     name: "TimerManager.cs",
-    description: "Gerenciamento de tempo e cronômetros",
-    features: [
-      "Contagem regressiva/progressiva",
-      "Avisos de tempo (urgente/crítico)",
-      "Pausar/retomar funcionalidade",
-      "Adicionar/remover tempo (power-ups/penalidades)",
-      "Formatação de tempo para display"
-    ],
-    path: "Scripts/TimerManager.cs"
+    description: "Gerenciamento de tempo",
+    path: "Scripts/TimerManager.cs",
+    category: "systems"
   },
   {
     name: "UIManager.cs",
-    description: "Gerencia toda a interface do usuário",
-    features: [
-      "Controle de visibilidade das telas",
-      "Atualização do HUD (pontuação, timer, vidas)",
-      "Configuração de botões",
-      "Sistema de animações de UI"
-    ],
-    path: "Scripts/UIManager.cs"
+    description: "Gerenciamento da interface",
+    path: "Scripts/UIManager.cs",
+    category: "ui"
   },
   {
     name: "EnemyController.cs",
-    description: "IA básica para inimigos do jogo",
-    features: [
-      "Perseguição inteligente do jogador",
-      "Sistema de ataque com alcance",
-      "Gerenciamento de vida e morte",
-      "Efeitos visuais de dano",
-      "Interface IInimigo implementada"
-    ],
-    path: "Scripts/EnemyController.cs"
+    description: "IA dos inimigos",
+    path: "Scripts/EnemyController.cs",
+    category: "enemies"
   },
   {
     name: "PowerUpSystem.cs",
-    description: "Sistema de power-ups com diferentes efeitos",
-    features: [
-      "6 tipos diferentes de power-ups",
-      "Efeitos temporários e permanentes",
-      "Sistema de coleta por trigger",
-      "Efeitos visuais e sonoros",
-      "Configuração flexível de valores"
-    ],
-    path: "Scripts/PowerUpSystem.cs"
+    description: "Sistema de power-ups",
+    path: "Scripts/PowerUpSystem.cs",
+    category: "systems"
   },
   {
     name: "MenuController.cs",
-    description: "Controla o menu principal e opções",
-    features: [
-      "Navegação entre painéis",
-      "Configurações de áudio integradas",
-      "Salvamento de preferências",
-      "Informações de recorde e versão",
-      "Suporte a navegação por teclado"
-    ],
-    path: "Scripts/MenuController.cs"
+    description: "Controle do menu",
+    path: "Scripts/MenuController.cs",
+    category: "ui"
   },
   {
     name: "InputManager.cs",
-    description: "Gerenciamento centralizado de controles",
-    features: [
-      "Suporte a teclado, mouse e gamepad",
-      "Sistema de remapeamento de teclas",
-      "Dead zones configuráveis",
-      "Eventos de input desacoplados",
-      "Salvamento de configurações"
-    ],
-    path: "Scripts/InputManager.cs"
+    description: "Gerenciamento de input",
+    path: "Scripts/InputManager.cs",
+    category: "core"
   }
 ];
 
-const svgAssets = [
-  { name: "game_over_emoji.svg", description: "Emoji chorando para tela de Game Over" },
-  { name: "restart_button.svg", description: "Botão RESTART com gradiente laranja" },
-  { name: "timer_background.svg", description: "Fundo do timer com ícone de relógio" },
-  { name: "card_background.svg", description: "Template para cartas do inventário" },
-  { name: "player_avatar.svg", description: "Avatar de jogador para interface" }
+const projectStructure = {
+  name: "GameOverSystem",
+  folders: [
+    {
+      name: "Assets",
+      items: [
+        {
+          name: "Scenes",
+          items: [
+            { name: "MainMenu.unity", type: "scene", icon: "🎬" },
+            { name: "GameLevel.unity", type: "scene", icon: "🎬" },
+            { name: "GameOver.unity", type: "scene", icon: "🎬" }
+          ]
+        },
+        {
+          name: "Scripts",
+          items: [
+            {
+              name: "Core",
+              items: [
+                { name: "GameState.cs", type: "script", icon: "📜" },
+                { name: "GameManager.cs", type: "script", icon: "📜" },
+                { name: "InputManager.cs", type: "script", icon: "📜" }
+              ]
+            },
+            {
+              name: "UI",
+              items: [
+                { name: "UIManager.cs", type: "script", icon: "📜" },
+                { name: "GameOverUI.cs", type: "script", icon: "📜" },
+                { name: "MenuController.cs", type: "script", icon: "📜" }
+              ]
+            },
+            {
+              name: "Player",
+              items: [
+                { name: "PlayerController.cs", type: "script", icon: "📜" }
+              ]
+            },
+            {
+              name: "Systems",
+              items: [
+                { name: "ScoreManager.cs", type: "script", icon: "📜" },
+                { name: "AudioManager.cs", type: "script", icon: "📜" },
+                { name: "TimerManager.cs", type: "script", icon: "📜" },
+                { name: "CardSystem.cs", type: "script", icon: "📜" },
+                { name: "PowerUpSystem.cs", type: "script", icon: "📜" }
+              ]
+            }
+          ]
+        },
+        {
+          name: "Prefabs",
+          items: [
+            { name: "Player.prefab", type: "prefab", icon: "🎭" },
+            { name: "Enemy_Basic.prefab", type: "prefab", icon: "🎭" },
+            { name: "PowerUp_Health.prefab", type: "prefab", icon: "🎭" },
+            { name: "UI_GameOver.prefab", type: "prefab", icon: "🎭" }
+          ]
+        },
+        {
+          name: "Sprites",
+          items: [
+            { name: "game_over_emoji.svg", type: "sprite", icon: "🖼️" },
+            { name: "restart_button.svg", type: "sprite", icon: "🖼️" },
+            { name: "timer_background.svg", type: "sprite", icon: "🖼️" },
+            { name: "card_background.svg", type: "sprite", icon: "🖼️" },
+            { name: "player_avatar.svg", type: "sprite", icon: "🖼️" }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+const hierarchyStructure = [
+  { name: "Main Camera", icon: "📹", level: 0 },
+  { name: "GameManager", icon: "⚙️", level: 0, scripts: ["GameState", "InputManager"] },
+  { name: "Canvas", icon: "🖼️", level: 0, children: [
+    { name: "MenuScreen", icon: "🎯", level: 1 },
+    { name: "GameScreen", icon: "🎯", level: 1 },
+    { name: "PauseScreen", icon: "🎯", level: 1 },
+    { name: "GameOverScreen", icon: "🎯", level: 1 }
+  ]},
+  { name: "Player", icon: "🏃", level: 0, scripts: ["PlayerController"] },
+  { name: "AudioSystem", icon: "🔊", level: 0, scripts: ["AudioManager"] },
+  { name: "Environment", icon: "🌍", level: 0, children: [
+    { name: "Ground", icon: "🟫", level: 1 },
+    { name: "EnemySpawner", icon: "🚪", level: 1 }
+  ]}
 ];
 
 function App() {
-  const [selectedScript, setSelectedScript] = useState<ScriptInfo | null>(null);
-  const [scriptContent, setScriptContent] = useState<string>("");
+  const [selectedScript, setSelectedScript] = useState(null);
+  const [scriptContent, setScriptContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('project');
+  const [expandedFolders, setExpandedFolders] = useState(new Set(['Assets', 'Scripts']));
 
-  const loadScript = async (script: ScriptInfo) => {
+  const loadScript = async (script) => {
     setLoading(true);
     setSelectedScript(script);
     
@@ -205,202 +202,296 @@ function App() {
     setLoading(false);
   };
 
+  const toggleFolder = (folderName) => {
+    const newExpanded = new Set(expandedFolders);
+    if (newExpanded.has(folderName)) {
+      newExpanded.delete(folderName);
+    } else {
+      newExpanded.add(folderName);
+    }
+    setExpandedFolders(newExpanded);
+  };
+
+  const renderTreeItem = (item, level = 0) => {
+    const isExpanded = expandedFolders.has(item.name);
+    const indent = level * 20;
+    
+    return (
+      <div key={item.name}>
+        <div 
+          style={{
+            paddingLeft: `${indent}px`,
+            padding: '4px 8px',
+            display: 'flex',
+            alignItems: 'center',
+            cursor: item.items ? 'pointer' : 'default',
+            backgroundColor: 'rgba(255,255,255,0.1)',
+            borderRadius: '4px',
+            margin: '1px 0',
+            fontSize: '12px'
+          }}
+          onClick={() => {
+            if (item.items) {
+              toggleFolder(item.name);
+            } else if (item.type === 'script') {
+              const script = scripts.find(s => s.name === item.name);
+              if (script) loadScript(script);
+            }
+          }}
+        >
+          {item.items && (
+            <span style={{ marginRight: '4px', fontSize: '10px' }}>
+              {isExpanded ? '▼' : '▶'}
+            </span>
+          )}
+          <span style={{ marginRight: '4px' }}>{item.icon || '📁'}</span>
+          <span style={{ color: item.type === 'script' ? '#4a9eff' : '#ffffff' }}>
+            {item.name}
+          </span>
+        </div>
+        
+        {item.items && isExpanded && (
+          <div style={{ marginLeft: '8px' }}>
+            {item.items.map(child => renderTreeItem(child, level + 1))}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const renderHierarchyItem = (item, level = 0) => {
+    const indent = level * 20;
+    
+    return (
+      <div key={item.name}>
+        <div 
+          style={{
+            paddingLeft: `${indent}px`,
+            padding: '4px 8px',
+            display: 'flex',
+            alignItems: 'center',
+            backgroundColor: 'rgba(255,255,255,0.1)',
+            borderRadius: '4px',
+            margin: '1px 0',
+            fontSize: '12px'
+          }}
+        >
+          <span style={{ marginRight: '4px' }}>{item.icon}</span>
+          <span style={{ color: '#ffffff' }}>{item.name}</span>
+          {item.scripts && (
+            <span style={{ marginLeft: '8px', fontSize: '10px', color: '#888' }}>
+              {item.scripts.join(', ')}
+            </span>
+          )}
+        </div>
+        
+        {item.children && item.children.map(child => renderHierarchyItem(child, level + 1))}
+      </div>
+    );
+  };
+
   return (
     <div style={{ 
       fontFamily: 'Inter, sans-serif',
       width: '100vw', 
       height: '100vh', 
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      overflow: 'hidden'
+      background: '#2b2b2b',
+      color: '#ffffff',
+      overflow: 'hidden',
+      display: 'flex'
     }}>
+      {/* Unity-style sidebar */}
       <div style={{
+        width: '300px',
+        background: '#393939',
+        borderRight: '1px solid #555',
         display: 'flex',
-        height: '100%'
+        flexDirection: 'column'
       }}>
-        {/* Sidebar */}
+        {/* Tabs */}
         <div style={{
-          width: '350px',
-          background: 'rgba(255, 255, 255, 0.95)',
-          backdropFilter: 'blur(10px)',
-          borderRight: '1px solid rgba(255, 255, 255, 0.2)',
-          overflowY: 'auto',
-          padding: '20px'
+          display: 'flex',
+          borderBottom: '1px solid #555'
         }}>
-          <div style={{
-            marginBottom: '20px',
-            textAlign: 'center'
-          }}>
-            <h1 style={{
-              margin: '0 0 10px 0',
-              color: '#2d3748',
-              fontSize: '24px',
-              fontWeight: 'bold'
-            }}>
-              Scripts Unity C# 
-            </h1>
-            <p style={{
-              margin: 0,
-              color: '#666',
-              fontSize: '14px'
-            }}>
-              Sistema Game Over Completo
-            </p>
-          </div>
-
-          <div style={{ marginBottom: '20px' }}>
-            <h3 style={{ margin: '0 0 10px 0', color: '#2d3748', fontSize: '16px' }}>
-              Scripts Principais
-            </h3>
-            {scripts.map((script, index) => (
-              <div
-                key={index}
-                onClick={() => loadScript(script)}
-                style={{
-                  padding: '12px',
-                  margin: '8px 0',
-                  background: selectedScript?.name === script.name 
-                    ? 'rgba(102, 126, 234, 0.1)' 
-                    : 'rgba(255, 255, 255, 0.5)',
-                  border: selectedScript?.name === script.name 
-                    ? '2px solid #667eea' 
-                    : '1px solid rgba(255, 255, 255, 0.3)',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease'
-                }}
-              >
-                <div style={{ fontWeight: 'bold', color: '#2d3748', fontSize: '14px' }}>
-                  {script.name}
-                </div>
-                <div style={{ color: '#666', fontSize: '12px', marginTop: '4px' }}>
-                  {script.description}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div>
-            <h3 style={{ margin: '0 0 10px 0', color: '#2d3748', fontSize: '16px' }}>
-              Assets SVG Criados
-            </h3>
-            {svgAssets.map((asset, index) => (
-              <div
-                key={index}
-                style={{
-                  padding: '8px',
-                  margin: '4px 0',
-                  background: 'rgba(255, 255, 255, 0.3)',
-                  borderRadius: '6px',
-                  fontSize: '12px'
-                }}
-              >
-                <div style={{ fontWeight: 'bold', color: '#2d3748' }}>
-                  {asset.name}
-                </div>
-                <div style={{ color: '#666' }}>
-                  {asset.description}
-                </div>
-              </div>
-            ))}
-          </div>
+          <button
+            onClick={() => setActiveTab('project')}
+            style={{
+              flex: 1,
+              padding: '8px',
+              background: activeTab === 'project' ? '#4a4a4a' : '#393939',
+              border: 'none',
+              color: '#ffffff',
+              fontSize: '12px',
+              cursor: 'pointer'
+            }}
+          >
+            Project
+          </button>
+          <button
+            onClick={() => setActiveTab('hierarchy')}
+            style={{
+              flex: 1,
+              padding: '8px',
+              background: activeTab === 'hierarchy' ? '#4a4a4a' : '#393939',
+              border: 'none',
+              color: '#ffffff',
+              fontSize: '12px',
+              cursor: 'pointer'
+            }}
+          >
+            Hierarchy
+          </button>
         </div>
 
-        {/* Main Content */}
+        {/* Content */}
         <div style={{
           flex: 1,
-          background: 'rgba(255, 255, 255, 0.9)',
-          backdropFilter: 'blur(10px)',
-          display: 'flex',
-          flexDirection: 'column'
+          padding: '8px',
+          overflowY: 'auto'
         }}>
-          {selectedScript ? (
-            <>
-              <div style={{
-                padding: '20px',
-                borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-                background: 'rgba(255, 255, 255, 0.5)'
+          {activeTab === 'project' ? (
+            <div>
+              <div style={{ 
+                fontSize: '14px', 
+                fontWeight: 'bold', 
+                marginBottom: '8px',
+                color: '#ffffff'
               }}>
-                <h2 style={{ margin: '0 0 10px 0', color: '#2d3748' }}>
-                  {selectedScript.name}
-                </h2>
-                <p style={{ margin: '0 0 15px 0', color: '#666' }}>
-                  {selectedScript.description}
-                </p>
-                <div>
-                  <strong style={{ color: '#2d3748' }}>Características:</strong>
-                  <ul style={{ margin: '5px 0 0 0', paddingLeft: '20px' }}>
-                    {selectedScript.features.map((feature, index) => (
-                      <li key={index} style={{ color: '#666', fontSize: '14px' }}>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                Unity Project - GameOverSystem
               </div>
-              
-              <div style={{
-                flex: 1,
-                padding: '20px',
-                overflow: 'auto'
-              }}>
-                {loading ? (
-                  <div style={{ textAlign: 'center', color: '#666' }}>
-                    Carregando script...
-                  </div>
-                ) : (
-                  <pre style={{
-                    background: '#2d3748',
-                    color: '#e2e8f0',
-                    padding: '20px',
-                    borderRadius: '8px',
-                    fontSize: '12px',
-                    lineHeight: '1.5',
-                    overflow: 'auto',
-                    margin: 0,
-                    fontFamily: 'Monaco, Consolas, "Lucida Console", monospace'
-                  }}>
-                    {scriptContent}
-                  </pre>
-                )}
-              </div>
-            </>
+              {projectStructure.folders.map(folder => renderTreeItem(folder))}
+            </div>
           ) : (
-            <div style={{
-              flex: 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexDirection: 'column',
-              textAlign: 'center',
-              padding: '40px'
-            }}>
-              <div style={{
-                width: '120px',
-                height: '120px',
-                background: 'linear-gradient(45deg, #667eea, #764ba2)',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: '20px',
-                fontSize: '48px'
+            <div>
+              <div style={{ 
+                fontSize: '14px', 
+                fontWeight: 'bold', 
+                marginBottom: '8px',
+                color: '#ffffff'
               }}>
-                🎮
+                Scene Hierarchy
               </div>
-              <h2 style={{ color: '#2d3748', marginBottom: '10px' }}>
-                Scripts Unity C# - Game Over System
-              </h2>
-              <p style={{ color: '#666', maxWidth: '500px', lineHeight: '1.6' }}>
-                Sistema completo de scripts C# para Unity 2D baseado na interface Game Over fornecida. 
-                Inclui 13 scripts principais com funcionalidades completas de gerenciamento de jogo, 
-                interface, áudio, pontuação e muito mais.
-              </p>
-              <p style={{ color: '#667eea', fontWeight: 'bold', marginTop: '20px' }}>
-                ← Selecione um script na barra lateral para visualizar o código
-              </p>
+              {hierarchyStructure.map(item => renderHierarchyItem(item))}
             </div>
           )}
         </div>
+      </div>
+
+      {/* Main content area */}
+      <div style={{
+        flex: 1,
+        background: '#1e1e1e',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        {selectedScript ? (
+          <>
+            {/* Script header */}
+            <div style={{
+              padding: '12px 16px',
+              borderBottom: '1px solid #555',
+              background: '#2d2d2d'
+            }}>
+              <h2 style={{ 
+                margin: '0 0 4px 0', 
+                color: '#ffffff',
+                fontSize: '16px'
+              }}>
+                {selectedScript.name}
+              </h2>
+              <p style={{ 
+                margin: 0, 
+                color: '#cccccc',
+                fontSize: '12px'
+              }}>
+                {selectedScript.description}
+              </p>
+            </div>
+            
+            {/* Script content */}
+            <div style={{
+              flex: 1,
+              padding: '16px',
+              overflow: 'auto'
+            }}>
+              {loading ? (
+                <div style={{ 
+                  textAlign: 'center', 
+                  color: '#888',
+                  fontSize: '14px'
+                }}>
+                  Carregando script...
+                </div>
+              ) : (
+                <pre style={{
+                  background: '#1e1e1e',
+                  color: '#d4d4d4',
+                  padding: '16px',
+                  borderRadius: '4px',
+                  fontSize: '12px',
+                  lineHeight: '1.4',
+                  overflow: 'auto',
+                  margin: 0,
+                  fontFamily: 'Consolas, Monaco, monospace',
+                  border: '1px solid #555'
+                }}>
+                  {scriptContent}
+                </pre>
+              )}
+            </div>
+          </>
+        ) : (
+          /* Welcome screen */
+          <div style={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            textAlign: 'center',
+            padding: '40px'
+          }}>
+            <div style={{
+              width: '80px',
+              height: '80px',
+              background: '#555',
+              borderRadius: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: '16px',
+              fontSize: '32px'
+            }}>
+              🎮
+            </div>
+            <h2 style={{ 
+              color: '#ffffff', 
+              marginBottom: '8px',
+              fontSize: '20px'
+            }}>
+              Unity Game Over System
+            </h2>
+            <p style={{ 
+              color: '#cccccc', 
+              maxWidth: '400px', 
+              lineHeight: '1.5',
+              fontSize: '14px'
+            }}>
+              Sistema completo de scripts C# para Unity 2D baseado na interface Game Over.
+              Navegue pelos scripts no Project window à esquerda para visualizar o código.
+            </p>
+            <div style={{
+              marginTop: '20px',
+              padding: '8px 16px',
+              background: '#333',
+              borderRadius: '4px',
+              fontSize: '12px',
+              color: '#888'
+            }}>
+              📁 Selecione um script no Project para começar
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
