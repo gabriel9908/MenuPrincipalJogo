@@ -10,6 +10,18 @@ interface ScriptInfo {
 
 const scripts: ScriptInfo[] = [
   {
+    name: "🎮 Tutorial Completo",
+    description: "Guia passo a passo de implementação dos scripts Unity",
+    features: [
+      "Configuração completa da Hierarchy",
+      "Instruções detalhadas para cada script",
+      "Configuração de referências no Inspector",
+      "Resolução de problemas comuns",
+      "Checklist de implementação"
+    ],
+    path: "Scripts/TUTORIAL_IMPLEMENTACAO.md"
+  },
+  {
     name: "GameState.cs",
     description: "Gerencia os estados do jogo (Menu, Jogando, Pausado, GameOver, Carregando)",
     features: [
@@ -103,6 +115,65 @@ const scripts: ScriptInfo[] = [
       "Formatação de tempo para display"
     ],
     path: "Scripts/TimerManager.cs"
+  },
+  {
+    name: "UIManager.cs",
+    description: "Gerencia toda a interface do usuário",
+    features: [
+      "Controle de visibilidade das telas",
+      "Atualização do HUD (pontuação, timer, vidas)",
+      "Configuração de botões",
+      "Sistema de animações de UI"
+    ],
+    path: "Scripts/UIManager.cs"
+  },
+  {
+    name: "EnemyController.cs",
+    description: "IA básica para inimigos do jogo",
+    features: [
+      "Perseguição inteligente do jogador",
+      "Sistema de ataque com alcance",
+      "Gerenciamento de vida e morte",
+      "Efeitos visuais de dano",
+      "Interface IInimigo implementada"
+    ],
+    path: "Scripts/EnemyController.cs"
+  },
+  {
+    name: "PowerUpSystem.cs",
+    description: "Sistema de power-ups com diferentes efeitos",
+    features: [
+      "6 tipos diferentes de power-ups",
+      "Efeitos temporários e permanentes",
+      "Sistema de coleta por trigger",
+      "Efeitos visuais e sonoros",
+      "Configuração flexível de valores"
+    ],
+    path: "Scripts/PowerUpSystem.cs"
+  },
+  {
+    name: "MenuController.cs",
+    description: "Controla o menu principal e opções",
+    features: [
+      "Navegação entre painéis",
+      "Configurações de áudio integradas",
+      "Salvamento de preferências",
+      "Informações de recorde e versão",
+      "Suporte a navegação por teclado"
+    ],
+    path: "Scripts/MenuController.cs"
+  },
+  {
+    name: "InputManager.cs",
+    description: "Gerenciamento centralizado de controles",
+    features: [
+      "Suporte a teclado, mouse e gamepad",
+      "Sistema de remapeamento de teclas",
+      "Dead zones configuráveis",
+      "Eventos de input desacoplados",
+      "Salvamento de configurações"
+    ],
+    path: "Scripts/InputManager.cs"
   }
 ];
 
